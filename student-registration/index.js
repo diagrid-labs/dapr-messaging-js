@@ -1,12 +1,17 @@
 const express = require('express');
 const app = express();
+app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('Hello from App Engine!');
+  res.send('Hello from NodeJS!');
 });
 
-// Listen to the App Engine-specified port, or 8080 otherwise
-const PORT = process.env.PORT || 8080;
+app.post('/register', (req, res) => {
+    console.log("Registration received:", req.body);
+    res.send(req.body);
+});
+
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}...`);
 });
