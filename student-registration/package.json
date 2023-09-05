@@ -1,0 +1,22 @@
+{
+  "name": "student-registration",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "service": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diagrid-labs/dapr-messaging-js.git"
+  },
+  "author": "Marc Duiker",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/diagrid-labs/dapr-messaging-js/issues"
+  },
+  "homepage": "https://github.com/diagrid-labs/dapr-messaging-js#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
