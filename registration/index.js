@@ -7,8 +7,9 @@ app.get('/', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-    console.log("Registration received:", req.body);
-    res.send(req.body);
+    const registrationMessage = `Registration received for ${req.body.name}`
+    console.log(registrationMessage);
+    res.send(registrationMessage);
 });
 
 const PORT = process.env.PORT || 5001;
