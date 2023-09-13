@@ -1,6 +1,6 @@
 @url=http://localhost
-@registerPort=5001
-@paymentPort=5002
+@registerPort=5501
+@paymentPort=5502
 
 ### Test registration service
 POST {{url}}:{{registerPort}}/register

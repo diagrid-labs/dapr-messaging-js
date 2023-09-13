@@ -1,0 +1,12 @@
+version: 1
+apps:
+  - appID: payment
+    appDirPath: ./payment/
+    appPort: 5502
+    daprHTTPPort: 3502
+    command: ["npm","start"]
+  - appID: registration
+    appDirPath: ./registration/
+    appPort: 5501
+    daprHTTPPort: 3501
+    command: ["npm","start",]

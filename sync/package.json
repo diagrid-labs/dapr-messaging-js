@@ -1,0 +1,7 @@
+{
+  "name": "install-sync-examples",
+  "version": "1.0.0",
+  "scripts": {
+    "install:all": "(cd ./payment && npm install) & (cd ../registration && npm install)"
+  }
+}

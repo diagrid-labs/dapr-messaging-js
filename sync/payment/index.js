@@ -7,7 +7,7 @@ app.post('/pay', (req, res) => {
     res.send(req.body);
 });
 
-const PORT = process.env.PORT || 5002;
+const PORT = process.env.PORT || 5502;
 app.listen(PORT, () => {
   console.log(`Payment service listening on port ${PORT}...`);
 });
