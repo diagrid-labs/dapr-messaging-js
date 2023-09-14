@@ -18,8 +18,10 @@ app.post('/register', async (req, res) => {
   });
   if (!response.ok) {
     console.error(`Error calling payment service: ${response.status} ${response.statusText}`);
+    res.sendStatus(response.status);
+  } else {
+    res.send(registrationMessage);
   }
-  res.send(registrationMessage);
 });
 
 const PORT = process.env.PORT || 5501;
