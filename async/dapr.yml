@@ -1,0 +1,14 @@
+version: 1
+  common:
+    resourcesPath: ./resources
+apps:
+  - appID: payment
+    appDirPath: ./payment/
+    appPort: 5512
+    daprHTTPPort: 3512
+    command: ["npm","start"]
+  - appID: registration
+    appDirPath: ./registration/
+    appPort: 5511
+    daprHTTPPort: 3511
+    command: ["npm","start",]

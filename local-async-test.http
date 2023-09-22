@@ -1,0 +1,23 @@
+@url=http://localhost
+@registerPort=5511
+@paymentPort=5512
+
+### Test registration service
+POST {{url}}:{{registerPort}}/register
+Content-Type: application/json
+
+{
+    "name": "Stu Dent",
+    "email": "stu@dent.com",
+    "class": "digital media",
+    "cost": 500
+}
+
+### Test payment services
+POST {{url}}:{{paymentPort}}/pay
+Content-Type: application/json
+
+{
+    "email": "stu@dent.com",
+    "cost": 500
+}

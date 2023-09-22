@@ -1,0 +1,8 @@
+{
+  "name": "install-sync-examples",
+  "version": "1.0.0",
+  "scripts": {
+    "install:mac": "(cd ./sync/payment && npm install) & (cd ./sync/registration && npm install) & (cd ./async/payment && npm install) & (cd ./async/registration && npm install)",
+    "install:win": "(cd ./sync/payment && npm install) & (cd ../registration && npm install) & (cd ../../async/payment && npm install) & (cd ../registration && npm install)"
+  }
+}

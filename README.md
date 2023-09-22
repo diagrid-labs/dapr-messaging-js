@@ -11,26 +11,26 @@ Ensure you have the following installed before proceeding:
 - [NodeJS](https://nodejs.org/)
 - Optional: [VS Code](https://code.visualstudio.com/) with the [REST client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) extension.
 
-## Synchronous messaging
+Run the following command in a terminal in the root of the repo to install the dependencies:
 
-### Run the sync messaging example
-
-1. Open a terminal and navigate to the `sync` folder.
-2. Run the following command to install the dependencies:
-
-    For macOS & Linux:
+_For macOS & Linux_
 
     ```bash
     npm run install:mac
     ```
 
-    For Windows:
+_For Windows_
 
     ```bash
     npm run install:win
     ```
 
-3. Run the apps with Dapr multi-app run (macOS or Linux only):
+## Synchronous messaging
+
+### Run the sync messaging example
+
+1. Open a terminal and navigate to the `sync` folder.
+2. Run the apps with Dapr multi-app run (macOS or Linux only):
 
     ```bash
     dapr run -f .
@@ -50,7 +50,7 @@ Ensure you have the following installed before proceeding:
     dapr run --app-port 5501 --app-id registration --app-protocol http --dapr-http-port 3501 -- npm start
     ```
 
-4. Make a request to the `register` endpoint of the registration service.
+3. Make a request to the `register` endpoint of the registration service.
 
     > If you're using VS Code with the REST client you can use the [local-sync-test.http file](local-sync-test.http).
 
@@ -120,3 +120,61 @@ The `sync/resources` folder contains a `resiliency.yaml` file that contains resi
     ```
 
     Now you know how to use resiliency policies to handle transient errors when doing synchronous messaging with Dapr.
+
+## Asynchronous messaging
+
+### Run the async messaging example
+
+1. Open a terminal and navigate to the `async` folder.
+2. Run the apps with Dapr multi-app run (macOS or Linux only):
+
+    ```bash
+    dapr run -f .
+    ```
+
+   Or run the apps separately with the Dapr CLI:
+
+    Navigate to the `payment` folder and run:
+
+    ```bash
+    dapr run --app-port 5512 --app-id payment --app-protocol http --dapr-http-port 3512 --resources-path ../resources/ -- npm start
+    ```
+
+    Open a new terminal and navigate to the `registration` folder and run:
+
+    ```bash
+    dapr run --app-port 5511 --app-id registration --app-protocol http --dapr-http-port 3511 --resources-path ../resources/ -- npm start
+    ```
+
+3. Make a request to the `register` endpoint of the registration service.
+
+    > If you're using VS Code with the REST client you can use the [local-async-test.http file](local-async-test.http).
+
+    ```bash
+    curl --request POST \
+    --url http://localhost:5511/register \
+    --header 'content-type: application/json' \
+    --data '{"name": "Stu Dent","email": "stu@dent.com","class": "digital media","cost": 500}'
+    ```
+
+    Expected response:
+
+    ```txt
+    Registration received for Stu Dent
+    ```
+
+    The application log of the payment service should show the following:
+
+    ```txt
+    == APP == Payment received: { email: 'stu@dent.com', cost: 500 }
+    ```
+
+    You've now successfully made a request to the registration service and that service published a message to the `newstudents` topic of the message broker. Since the payment service is subscribed to this topic it received the event and made a log statement to the console.
+
+4. Open the Zipkin dashboard at http://localhost:9411/zipkin/ to inspect the traces.
+5. In the menu, go to *dependencies* and click the search button (you might need to update the start time to before you started to make the requests). You should now see a visual representation of the communication between the services. To analyze this further you can:
+   - Click on the `registration` service and click the *Traces* button.
+   - Click Run query. If there are no results you probably need to update the lookback range under the settings cog.
+   - The page should now lists the traces of the registration service.
+   - Find the trace that has the root: `registration: /v1.0/publish/studentpubsub/newstudents`
+   - Now you see a timeline that shows both the `registration` and the `payment` services.
