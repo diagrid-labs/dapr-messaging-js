@@ -13,17 +13,19 @@ Ensure you have the following installed before proceeding:
 
 Run the following command in a terminal in the root of the repo to install the dependencies:
 
-_For macOS & Linux_
+*For macOS & Linux*
 
-    ```bash
-    npm run install:mac
-    ```
+```bash
+npm run install:mac
+```
 
-_For Windows_
+*For Windows*
 
-    ```bash
-    npm run install:win
-    ```
+```bash
+npm run install:win
+```
+
+Wait until all dependencies are installed.
 
 ## Synchronous messaging
 
@@ -172,9 +174,21 @@ The `sync/resources` folder contains a `resiliency.yaml` file that contains resi
     You've now successfully made a request to the registration service and that service published a message to the `newstudents` topic of the message broker. Since the payment service is subscribed to this topic it received the event and made a log statement to the console.
 
 4. Open the Zipkin dashboard at http://localhost:9411/zipkin/ to inspect the traces.
-5. In the menu, go to *dependencies* and click the search button (you might need to update the start time to before you started to make the requests). You should now see a visual representation of the communication between the services. To analyze this further you can:
+5. In the menu, go to *dependencies* and click the search button (you might need to update the start time to before you started to make the requests). You should now see a visual representation of the communication between the services.
+
+    ![Zipkin Root item](media/async-zipkin-visual.png)
+
+6. To analyze this further you can:
    - Click on the `registration` service and click the *Traces* button.
+
+    ![Zipkin Root item](media/async-zipkin-registration.png)
+
    - Click Run query. If there are no results you probably need to update the lookback range under the settings cog.
    - The page should now lists the traces of the registration service.
-   - Find the trace that has the root: `registration: /v1.0/publish/studentpubsub/newstudents`
+   - Find the trace that has the root: `registration: /v1.0/publish/studentpubsub/newstudents` and click on the *SHOW* button.
+
+    ![Zipkin Root item](media/async-zipkin-root.png)
+
    - Now you see a timeline that shows both the `registration` and the `payment` services.
+
+    ![Zipkin Root item](media/async-zipkin-timeline.png)
