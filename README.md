@@ -2,6 +2,10 @@
 
 Examples of sync and async microservice messaging with Dapr and JavaScript.
 
+The demo in this repo is in the context of a student registration service that needs to communicate with a payment service. The registration service will receive a payload from a client that contains the student name, email, class name, and the cost of the class.
+
+![Dapr messaging use case](media/dapr-messaging-js-intro-v1.png)
+
 ## Prerequisites
 
 Ensure you have the following installed before proceeding:
