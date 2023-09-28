@@ -33,7 +33,7 @@ Wait until all dependencies are installed.
 
 ## Synchronous messaging
 
-Dapr services can communicate with each other using synchronous messaging. This is known as service-to-service invocation using a request/response model over HTTP or GRPC. Service A uses the DApr API to post a request. First this request arrives at the Dapr sidecar of service A. The sidecar will perform a name resolution to find out where the destination Dapr sidecar is for service B. The service A sidecar then forwards the request to the sidecar of service B which in turn delivers the request to service B itself. The response from service B flows through the sidecars back to service A.
+Dapr services can communicate with each other using synchronous messaging. This is known as service-to-service invocation using a request/response model over HTTP or GRPC. Service A uses the Dapr API to post a request and uses the app-id to identify the receiving service. First this request arrives at the Dapr sidecar of service A. The sidecar will perform a name resolution to find out where the receiving Dapr sidecar is for service B. The service A sidecar then forwards the request to the sidecar of service B which in turn delivers the request to service B itself. The response from service B flows through the sidecars back to service A.
 
 The following diagram shows the flow of a synchronous request/response between two Dapr services, a Registration service and a Payment service:
 
