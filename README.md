@@ -33,7 +33,7 @@ Dapr services can communicate with each other using synchronous messaging. This 
 
 The following diagram shows the flow of a synchronous request/response between two Dapr services, a Register service and a Payment service:
 
-![Dapr service-to-service invocation](media/dapr-messaging-js-s2s-v2.png)
+![Dapr service-to-service invocation](media/dapr-messaging-js-s2s-v3.png)
 
 ### Run the sync messaging example
 
