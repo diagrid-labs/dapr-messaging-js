@@ -1,6 +1,6 @@
 # Sync vs async messaging with Dapr and JavaScript
 
-Examples of sync and async messaging with Dapr and JavaScript.
+Examples of sync and async microservice messaging with Dapr and JavaScript.
 
 ## Prerequisites
 
@@ -28,6 +28,12 @@ npm run install:win
 Wait until all dependencies are installed.
 
 ## Synchronous messaging
+
+Dapr services can communicate with each other using synchronous messaging. This is known as service-to-service invocation using a request/response model over HTTP or GRPC. Service A uses the DApr API to post a request. First this request arrives at the Dapr sidecar of service A. The sidecar will perform a name resolution to find out where the destination Dapr sidecar is for service B. The service A sidecar then forwards the request to the sidecar of service B which in turn delivers the request to service B itself. The response from service B flows through the sidecars back to service A.
+
+The following diagram shows the flow of a synchronous request/response between two Dapr services, a Register service and a Payment service:
+
+![Dapr service-to-service invocation](media/dapr-messaging-js-s2s-v2.png)
 
 ### Run the sync messaging example
 
@@ -124,6 +130,10 @@ The `sync/resources` folder contains a `resiliency.yaml` file that contains resi
     Now you know how to use resiliency policies to handle transient errors when doing synchronous messaging with Dapr.
 
 ## Asynchronous messaging
+
+Dapr services can communicate asynchronously with each other using a publish/subscribe model. This involves an intermediary service known as a message broker. Service A uses the Dapr API to publish an message. The message arrives at the sidecar of service A which publishes the message to a topic on the message broker. The sidecar of service B is subscribed to that topic, receives the message and forwards it to service B. The following diagram shows the flow of an asynchronous publish/subscribe between two Dapr services, a Register service and a Payment service:
+
+![Dapr pub/sub messaging](media/dapr-messaging-js-pubsub-v1.png)
 
 ### Run the async messaging example
 
