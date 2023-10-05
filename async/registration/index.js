@@ -23,5 +23,5 @@ app.post('/register', async (req, res) => {
 
 const PORT = process.env.PORT || 5511;
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}...`);
+  console.log(`Registration service listening on port ${PORT}...`);
 });

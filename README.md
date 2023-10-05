@@ -206,3 +206,51 @@ Dapr services can communicate asynchronously with each other using a publish/sub
    - Now you see a timeline that shows both the `registration` and the `payment` services.
 
     ![Zipkin Root item](media/async-zipkin-timeline.png)
+
+### Using yaml based subscriptions
+
+1. The `async/resources` folder contains a `subscriptions._yaml` file that contains the subscription configuration for the `payment` service. Inspect this file.
+2. Remove the underscore from the `subscriptions._yaml` file extension so it will be loaded when `dapr run` is called.
+3. Open the `index.js` file of the payment service and comment out the `app.get('/dapr/subscribe'...` function since the `subscription.yaml` file is now used to configure the subscription.
+4. Run the apps with Dapr multi-app run (macOS or Linux only):
+
+    ```bash
+    dapr run -f .
+    ```
+
+   Or run the apps separately with the Dapr CLI:
+
+    Navigate to the `payment` folder and run:
+
+    ```bash
+    dapr run --app-port 5512 --app-id payment --app-protocol http --dapr-http-port 3512 --resources-path ../resources/ -- npm start
+    ```
+
+    Open a new terminal and navigate to the `registration` folder and run:
+
+    ```bash
+    dapr run --app-port 5511 --app-id registration --app-protocol http --dapr-http-port 3511 --resources-path ../resources/ -- npm start
+    ```
+
+5. Make a request to the `register` endpoint of the registration service.
+
+    > If you're using VS Code with the REST client you can use the [local-async-test.http file](local-async-test.http).
+
+    ```bash
+    curl --request POST \
+    --url http://localhost:5511/register \
+    --header 'content-type: application/json' \
+    --data '{"name": "Stu Dent","email": "stu@dent.com","class": "digital media","cost": 500}'
+    ```
+
+    Expected response:
+
+    ```txt
+    Registration received for Stu Dent
+    ```
+
+    The application log of the payment service should show the following:
+
+    ```txt
+    == APP == Payment received: { email: 'stu@dent.com', cost: 500 }
+    ```

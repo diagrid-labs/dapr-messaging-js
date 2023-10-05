@@ -1,9 +1,9 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
 const PUBSUB_COMPONENT = process.env.PUBSUB_COMPONENT || "studentpubsub";
 const PUBSUB_TOPIC = process.env.PUBSUB_TOPIC || "newstudents";
 
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
 app.use(bodyParser.json({ type: 'application/*+json' }));
 
 app.get('/dapr/subscribe', (_req, res) => {
