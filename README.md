@@ -95,7 +95,7 @@ The `sync/resources` folder contains a `resiliency.yaml` file that contains resi
 2. Open a terminal and navigate to the `registration` folder and run:
 
     ```bash
-    dapr run --app-port 5502 --app-id registration --app-protocol http --dapr-http-port 3502 --resources-path ../resources -- npm start
+    dapr run --app-port 5501 --app-id registration --app-protocol http --dapr-http-port 3501 --resources-path ../resources -- npm start
     ```
 
     > Note that the `--resources-path` argument is used to specify the location of the `resiliency.yaml` file.
@@ -122,7 +122,7 @@ The `sync/resources` folder contains a `resiliency.yaml` file that contains resi
 5. Before the request times out, open a new terminal and navigate to the `payment` folder and start the payment service:
 
     ```bash
-    dapr run --app-port 5501 --app-id registration --app-protocol http --dapr-http-port 3501 -- npm start
+    dapr run --app-port 5502 --app-id payment --app-protocol http --dapr-http-port 3502 -- npm start
     ```
 
     Expected application log for the registration service:

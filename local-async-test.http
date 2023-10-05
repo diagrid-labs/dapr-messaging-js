@@ -1,9 +1,9 @@
 @url=http://localhost
-@registerPort=5511
+@registrationPort=5511
 @paymentPort=5512
 
 ### Test registration service
-POST {{url}}:{{registerPort}}/register
+POST {{url}}:{{registrationPort}}/register
 Content-Type: application/json
 
 {
