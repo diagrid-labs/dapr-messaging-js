@@ -254,3 +254,52 @@ Dapr services can communicate asynchronously with each other using a publish/sub
     ```txt
     == APP == Payment received: { email: 'stu@dent.com', cost: 500 }
     ```
+
+### Configuring a dead letter topic
+
+Dead letter topics are used for messages that cannot be delivered to the subscriber or the subscriber can't process them. Dapr can be configured to send these messages to a dead letter topic and be handled by another endpoint.
+
+1. The `async/resources` folder contains a `deadletter._yaml` file that contains the dead letter configuration for the `payment` service. Inspect this file.
+2. Remove the underscore from the `deadletter._yaml` file extension so it will be loaded when `dapr run` is called.
+3. Run the apps with Dapr multi-app run (macOS or Linux only):
+
+    ```bash
+    dapr run -f .
+    ```
+
+   Or run the apps separately with the Dapr CLI:
+
+    Navigate to the `payment` folder and run:
+
+    ```bash
+    dapr run --app-port 5512 --app-id payment --app-protocol http --dapr-http-port 3512 --resources-path ../resources/ -- npm start
+    ```
+
+    Open a new terminal and navigate to the `registration` folder and run:
+
+    ```bash
+    dapr run --app-port 5511 --app-id registration --app-protocol http --dapr-http-port 3511 --resources-path ../resources/ -- npm start
+    ```
+
+4. Make a request to the `register` endpoint of the registration service and make the `email` field empty to trigger the dead letter handling.
+
+    > If you're using VS Code with the REST client you can use the [local-async-test.http file](local-async-test.http).
+
+    ```bash
+    curl --request POST \
+    --url http://localhost:5511/register \
+    --header 'content-type: application/json' \
+    --data '{"name": "Stu Dent","email": "","class": "digital media","cost": 500}'
+    ```
+
+    Expected response:
+
+    ```txt
+    Registration received for Stu Dent
+    ```
+
+    The application log of the payment service should show the following:
+
+    ```txt
+    == APP == Invalid message received: {"email":"","cost":500}
+    ```
